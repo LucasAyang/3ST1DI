@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de Cartões</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-top: 20px;
+      border-radius: 15px;
+      overflow: hidden;
+      background-size: cover;
+    }
+    .card-body {
+      padding: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="mt-5">Editor de Cartões</h1>
+    <form id="cardForm">
+      <div class="form-group">
+        <label for="backgroundColor">Cor de Fundo:</label>
+        <input type="color" class="form-control" id="backgroundColor">
+      </div>
+      <div class="form-group">
+        <label for="borderColor">Cor da Borda:</label>
+        <input type="color" class="form-control" id="borderColor">
+      </div>
+      <div class="form-group">
+        <label for="textColor">Cor do Texto:</label>
+        <input type="color" class="form-control" id="textColor">
+      </div>
+      <div class="form-group">
+        <label>Tipo de Cartão:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cardType" id="birthdayCard" value="aniversario" checked>
+          <label class="form-check-label" for="birthdayCard">Aniversário</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cardType" id="christmasCard" value="natal">
+          <label class="form-check-label" for="christmasCard">Natal</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cardType" id="easterCard" value="pascoa">
+          <label class="form-check-label" for="easterCard">Páscoa</label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar Cartão</button>
+      <button type="button" class="btn btn-danger" id="resetButton">Limpar</button>
+    </form>
+    
+    <div class="card" id="previewCard">
+      <div class="card-body">
+        <h5 class="card-title">Feliz Aniversário!</h5>
+        <p class="card-text">Que seu dia seja cheio de alegria e boas surpresas!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript para atualizar o cartão em tempo real -->
+  <script>
+    const backgroundColorInput = document.getElementById('backgroundColor');
+    const borderColorInput = document.getElementById('borderColor');
+    const textColorInput = document.getElementById('textColor');
+    const birthdayCard = document.getElementById('birthdayCard');
+    const christmasCard = document.getElementById('christmasCard');
+    const easterCard = document.getElementById('easterCard');
+    const previewCard = document.getElementById('previewCard');
+    const resetButton = document.getElementById('resetButton');
+    const cardForm = document.getElementById('cardForm');
+
+    backgroundColorInput.addEventListener('input', updateCard);
+    borderColorInput.addEventListener('input', updateCard);
+    textColorInput.addEventListener('input', updateCard);
+    birthdayCard.addEventListener('change', updateCard);
+    christmasCard.addEventListener('change', updateCard);
+    easterCard.addEventListener('change', updateCard);
+    cardForm.addEventListener('submit', saveCard);
+    resetButton.addEventListener('click', resetForm);
+
+    function updateCard() {
+      previewCard.style.backgroundColor = backgroundColorInput.value;
+      previewCard.style.borderColor = borderColorInput.value;
+      previewCard.style.color = textColorInput.value;
+
+      let cardTitle;
+      let defaultMessage;
+
+      if (birthdayCard.checked) {
+        cardTitle = 'Feliz Aniversário!';
+        defaultMessage = 'Que seu dia seja cheio de alegria e boas surpresas!';
+      } else if (christmasCard.checked) {
+        cardTitle = 'Feliz Natal!';
+        defaultMessage = 'Que esta época do ano traga muita felicidade e harmonia para você e sua família!';
+      } else if (easterCard.checked) {
+        cardTitle = 'Feliz Páscoa!';
+        defaultMessage = 'Que sua Páscoa seja doce e feliz, cheia de amor e paz!';
+      }
+
+      previewCard.querySelector('.card-title').innerText = cardTitle || '';
+      previewCard.querySelector('.card-text').innerText = defaultMessage || '';
+    }
+
+    function saveCard(event) {
+      event.preventDefault();
+      alert('Cartão salvo com sucesso!');
+    }
+
+    function resetForm() {
+      cardForm.reset();
+      previewCard.style.backgroundImage = 'none';
+      updateCard();
+    }
+  </script>
+</body>
+</html>
