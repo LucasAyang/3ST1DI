@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editor de Cartões</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     .card {
       margin-top: 20px;
@@ -13,11 +13,13 @@
       overflow: hidden;
       background-size: cover;
     }
+
     .card-body {
       padding: 30px;
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
@@ -53,7 +55,7 @@
       <button type="submit" class="btn btn-primary">Salvar Cartão</button>
       <button type="button" class="btn btn-danger" id="resetButton">Limpar</button>
     </form>
-    
+
     <div class="card" id="previewCard">
       <div class="card-body">
         <h5 class="card-title">Feliz Aniversário!</h5>
@@ -62,7 +64,6 @@
     </div>
   </div>
 
-  <!-- JavaScript para atualizar o cartão em tempo real -->
   <script>
     const backgroundColorInput = document.getElementById('backgroundColor');
     const borderColorInput = document.getElementById('borderColor');
@@ -118,4 +119,5 @@
     }
   </script>
 </body>
+
 </html>
