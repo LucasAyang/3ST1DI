@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editor de Cartões</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .card {
       margin-top: 20px;
@@ -13,50 +12,48 @@
       overflow: hidden;
       background-size: cover;
     }
-
     .card-body {
       padding: 30px;
     }
   </style>
 </head>
-
 <body>
 
   <div class="container">
     <h1 class="mt-5">Editor de Cartões</h1>
-    <form id="cardForm">
+    <form id="formularioCartao">
       <div class="form-group">
-        <label for="backgroundColor">Cor de Fundo:</label>
-        <input type="color" class="form-control" id="backgroundColor">
+        <label for="corFundo">Cor de Fundo:</label>
+        <input type="color" class="form-control" id="corFundo">
       </div>
       <div class="form-group">
-        <label for="borderColor">Cor da Borda:</label>
-        <input type="color" class="form-control" id="borderColor">
+        <label for="corBorda">Cor da Borda:</label>
+        <input type="color" class="form-control" id="corBorda">
       </div>
       <div class="form-group">
-        <label for="textColor">Cor do Texto:</label>
-        <input type="color" class="form-control" id="textColor">
+        <label for="corTexto">Cor do Texto:</label>
+        <input type="color" class="form-control" id="corTexto">
       </div>
       <div class="form-group">
         <label>Tipo de Cartão:</label>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="cardType" id="birthdayCard" value="aniversario" checked>
-          <label class="form-check-label" for="birthdayCard">Aniversário</label>
+          <input class="form-check-input" type="radio" name="tipoCartao" id="cartaoAniversario" value="aniversario" checked>
+          <label class="form-check-label" for="cartaoAniversario">Aniversário</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="cardType" id="christmasCard" value="natal">
-          <label class="form-check-label" for="christmasCard">Natal</label>
+          <input class="form-check-input" type="radio" name="tipoCartao" id="cartaoNatal" value="natal">
+          <label class="form-check-label" for="cartaoNatal">Natal</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="cardType" id="easterCard" value="pascoa">
-          <label class="form-check-label" for="easterCard">Páscoa</label>
+          <input class="form-check-input" type="radio" name="tipoCartao" id="cartaoPascoa" value="pascoa">
+          <label class="form-check-label" for="cartaoPascoa">Páscoa</label>
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Salvar Cartão</button>
-      <button type="button" class="btn btn-danger" id="resetButton">Limpar</button>
+      <button type="button" class="btn btn-danger" id="botaoLimpar">Limpar</button>
     </form>
-
-    <div class="card" id="previewCard">
+    
+    <div class="card" id="cartaoPrevio">
       <div class="card-body">
         <h5 class="card-title">Feliz Aniversário!</h5>
         <p class="card-text">Que seu dia seja cheio de alegria e boas surpresas!</p>
@@ -65,59 +62,58 @@
   </div>
 
   <script>
-    const backgroundColorInput = document.getElementById('backgroundColor');
-    const borderColorInput = document.getElementById('borderColor');
-    const textColorInput = document.getElementById('textColor');
-    const birthdayCard = document.getElementById('birthdayCard');
-    const christmasCard = document.getElementById('christmasCard');
-    const easterCard = document.getElementById('easterCard');
-    const previewCard = document.getElementById('previewCard');
-    const resetButton = document.getElementById('resetButton');
-    const cardForm = document.getElementById('cardForm');
+    const entradaCorFundo = document.getElementById('corFundo');
+    const entradaCorBorda = document.getElementById('corBorda');
+    const entradaCorTexto = document.getElementById('corTexto');
+    const cartaoAniversario = document.getElementById('cartaoAniversario');
+    const cartaoNatal = document.getElementById('cartaoNatal');
+    const cartaoPascoa = document.getElementById('cartaoPascoa');
+    const cartaoPrevio = document.getElementById('cartaoPrevio');
+    const botaoLimpar = document.getElementById('botaoLimpar');
+    const formularioCartao = document.getElementById('formularioCartao');
 
-    backgroundColorInput.addEventListener('input', updateCard);
-    borderColorInput.addEventListener('input', updateCard);
-    textColorInput.addEventListener('input', updateCard);
-    birthdayCard.addEventListener('change', updateCard);
-    christmasCard.addEventListener('change', updateCard);
-    easterCard.addEventListener('change', updateCard);
-    cardForm.addEventListener('submit', saveCard);
-    resetButton.addEventListener('click', resetForm);
+    entradaCorFundo.addEventListener('input', atualizarCartao);
+    entradaCorBorda.addEventListener('input', atualizarCartao);
+    entradaCorTexto.addEventListener('input', atualizarCartao);
+    cartaoAniversario.addEventListener('change', atualizarCartao);
+    cartaoNatal.addEventListener('change', atualizarCartao);
+    cartaoPascoa.addEventListener('change', atualizarCartao);
+    formularioCartao.addEventListener('submit', salvarCartao);
+    botaoLimpar.addEventListener('click', resetarFormulario);
 
-    function updateCard() {
-      previewCard.style.backgroundColor = backgroundColorInput.value;
-      previewCard.style.borderColor = borderColorInput.value;
-      previewCard.style.color = textColorInput.value;
+    function atualizarCartao() {
+      cartaoPrevio.style.backgroundColor = entradaCorFundo.value;
+      cartaoPrevio.style.borderColor = entradaCorBorda.value;
+      cartaoPrevio.style.color = entradaCorTexto.value;
 
-      let cardTitle;
-      let defaultMessage;
+      let tituloCartao;
+      let mensagemPadrao;
 
-      if (birthdayCard.checked) {
-        cardTitle = 'Feliz Aniversário!';
-        defaultMessage = 'Que seu dia seja cheio de alegria e boas surpresas!';
-      } else if (christmasCard.checked) {
-        cardTitle = 'Feliz Natal!';
-        defaultMessage = 'Que esta época do ano traga muita felicidade e harmonia para você e sua família!';
-      } else if (easterCard.checked) {
-        cardTitle = 'Feliz Páscoa!';
-        defaultMessage = 'Que sua Páscoa seja doce e feliz, cheia de amor e paz!';
+      if (cartaoAniversario.checked) {
+        tituloCartao = 'Feliz Aniversário!';
+        mensagemPadrao = 'Que seu dia seja cheio de alegria e boas surpresas!';
+      } else if (cartaoNatal.checked) {
+        tituloCartao = 'Feliz Natal!';
+        mensagemPadrao = 'Que esta época do ano traga muita felicidade e harmonia para você e sua família!';
+      } else if (cartaoPascoa.checked) {
+        tituloCartao = 'Feliz Páscoa!';
+        mensagemPadrao = 'Que sua Páscoa seja doce e feliz, cheia de amor e paz!';
       }
 
-      previewCard.querySelector('.card-title').innerText = cardTitle || '';
-      previewCard.querySelector('.card-text').innerText = defaultMessage || '';
+      cartaoPrevio.querySelector('.card-title').innerText = tituloCartao || '';
+      cartaoPrevio.querySelector('.card-text').innerText = mensagemPadrao || '';
     }
 
-    function saveCard(event) {
-      event.preventDefault();
+    function salvarCartao(evento) {
+      evento.preventDefault();
       alert('Cartão salvo com sucesso!');
     }
 
-    function resetForm() {
-      cardForm.reset();
-      previewCard.style.backgroundImage = 'none';
-      updateCard();
+    function resetarFormulario() {
+      formularioCartao.reset();
+      cartaoPrevio.style.backgroundImage = 'none';
+      atualizarCartao();
     }
   </script>
 </body>
-
 </html>
